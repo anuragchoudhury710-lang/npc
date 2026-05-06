@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎉</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  background: radial-gradient(circle, #ff9a9e, #fad0c4);
+  text-align: center;
+  color: white;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+/* BUTTON */
+button {
+  padding: 15px 30px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  background: white;
+  color: #ff4081;
+}
+
+/* MESSAGE */
+#message {
+  margin-top: 20px;
+  font-size: 1.2em;
+  min-height: 50px;
+}
+
+/* BALLOONS */
+.balloon {
+  position: fixed;
+  bottom: -100px;
+  width: 40px;
+  height: 50px;
+  background: red;
+  border-radius: 50%;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+  }
+}
+
+/* GIFT BOX */
+.gift {
+  font-size: 60px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: transform 0.3s;
+}
+.gift:hover {
+  transform: scale(1.2) rotate(10deg);
+}
+
+/* SPARKLE TRAIL */
+.sparkle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: fadeOut 1s linear forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: scale(2); }
+}
+
+/* FIREWORK */
+.firework {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+footer {
+  padding: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+  <h1>🎉 Happy Birthday [Name]! 🎂</h1>
+  
+  <button onclick="startSurprise()">Click for Surprise 🎁</button>
+  
+  <div class="gift" onclick="openGift()">🎁</div>
+
+  <div id="message"></div>
+</div>
+
+<footer>Made with ❤️</footer>
+
+<script>
+// Typing effect
+function typeText(text) {
+  let i = 0;
+  let speed = 40;
+  let msg = document.getElementById("message");
+  msg.innerHTML = "";
+
+  function typing() {
+    if (i < text.length) {
+      msg.innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    }
+  }
+  typing();
+}
+
+// Start surprise
+function startSurprise() {
+  typeText("You are amazing! 💖 May your life be filled with happiness, love, and endless success! 🎉");
+  createConfetti();
+  launchFireworks();
+}
+
+// Gift click
+function openGift() {
+  typeText("🎁 Surprise! You deserve all the happiness in the world! 💕");
+  launchFireworks();
+}
+
+// Confetti
+function createConfetti() {
+  for (let i = 0; i < 60; i++) {
+    let c = document.createElement("div");
+    c.style.position = "fixed";
+    c.style.width = "8px";
+    c.style.height = "8px";
+    c.style.background = "hsl(" + Math.random()*360 + ",100%,50%)";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.top = "-10px";
+    c.style.opacity = "0.8";
+    c.style.borderRadius = "50%";
+    c.style.animation = "fall 3s linear";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+}
+
+// Fireworks
+function launchFireworks() {
+  for (let i = 0; i < 5; i++) {
+    let x = Math.random() * window.innerWidth;
+    let y = Math.random() * window.innerHeight / 2;
+
+    for (let j = 0; j < 20; j++) {
+      let f = document.createElement("div");
+      f.className = "firework";
+      f.style.background = "hsl(" + Math.random()*360 + ",100%,50%)";
+      f.style.left = x + "px";
+      f.style.top = y + "px";
+
+      let angle = Math.random() * 2 * Math.PI;
+      let distance = Math.random() * 100;
+
+      f.animate([
+        { transform: "translate(0,0)", opacity: 1 },
+        { transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`, opacity: 0 }
+      ], {
+        duration: 1000,
+        easing: "ease-out"
+      });
+
+      document.body.appendChild(f);
+      setTimeout(() => f.remove(), 1000);
+    }
+  }
+}
+
+// Balloons
+setInterval(() => {
+  let b = document.createElement("div");
+  b.className = "balloon";
+  b.style.left = Math.random() * 100 + "vw";
+  b.style.background = "hsl(" + Math.random()*360 + ",100%,50%)";
+  b.style.animationDuration = (4 + Math.random()*3) + "s";
+  document.body.appendChild(b);
+  setTimeout(() => b.remove(), 7000);
+}, 800);
+
+// Mouse sparkle trail
+document.addEventListener("mousemove", e => {
+  let s = document.createElement("div");
+  s.className = "sparkle";
+  s.style.left = e.clientX + "px";
+  s.style.top = e.clientY + "px";
+  document.body.appendChild(s);
+  setTimeout(() => s.remove(), 1000);
+});
+</script>
+
+</body>
+</html>
